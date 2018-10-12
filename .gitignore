@@ -167,4 +167,5 @@ pip-log.txt
 #############
 /build.config
 /build.number
-/media/*/min/*
+/media/css/*.min.css
+/media/js/*.min.js
