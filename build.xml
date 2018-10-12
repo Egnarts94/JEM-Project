@@ -17,18 +17,23 @@
 	<property name="cfg.adminFilesDir" location="${cfg.comDir}/admin" />
 	<property name="cfg.siteFilesDir" location="${cfg.comDir}/site" />
 	<property name="cfg.version" value="${pkg.version}.${build.number}" />
+	<property name="compressor.path" value="${compressor.path}" />
+	<property name="compressor.cssDir" value="${basedir}/media/css" />
+	<property name="compressor.jsDir" value="${basedir}/media/js" />
 
 	<target name="build" depends="clean, init, build_package, info" />
 
 	<target name="init" description="creates nessecary directory to build with">
+		<mkdir dir="${compressor.jsDir}/min" />
+		<mkdir dir="${compressor.cssDir}/min" />
 		<mkdir dir="${cfg.buildVersionDir}" />
 		<mkdir dir="${cfg.buildVersionDir}/plugins" />
 		<mkdir dir="${cfg.buildVersionDir}/modules" />
 		<mkdir dir="${cfg.buildVersionDir}/components" />
 		<mkdir dir="${cfg.buildVersionDir}/3rd" />
 	</target>
-
-	<target name="build_package" depends="build_plugins, build_modules, build_component" description="packages the final package file">
+  
+	<target name="build_package" depends="js_minify, css_minify, build_plugins, build_modules, build_component" description="packages the final package file">
 		<zip destfile="${cfg.buildVersionDir}/pkg_${cfg.name}_v${cfg.version}.zip">
 			<zipfileset dir="${cfg.buildVersionDir}/components" prefix="packages" />
 			<zipfileset dir="${cfg.buildVersionDir}/plugins" prefix="packages">
@@ -40,6 +45,48 @@
 			<zipfileset dir="package" />
 		</zip>
 	</target>
+  
+  <target name="js_minify">
+    <apply executable="java" parallel="true" verbose="true">
+        <fileset dir="${compressor.jsDir}" includes="*.js"/>
+        <arg line="-jar"/>
+        <arg path="${compressor.path}"/>
+        <arg line="--charset utf-8"/>
+        <srcfile/>
+        <!-- Workaround for yuicompressor-2.4.8 has a bug with absolute paths on windows. 
+        When fixed: remove line below and uncomment the other 3 lines and remove the <move> task -->
+        <arg line="-o '.js$:.min.js'"/> 
+        <!--<arg line="-o"/>
+        <mapper type="glob" from="*.js" to="${compressor.jsDir}/min/*.min.js"/>
+        <targetfile/>-->
+        <arg line="--charset utf-8"/>
+    </apply>
+    <move todir="${compressor.jsDir}/min">
+      <fileset dir="${compressor.jsDir}" includes="*.min.js"/>
+    </move>
+    <copy file="${compressor.jsDir}/index.html" todir="${compressor.jsDir}/min"/>
+  </target>
+  
+  <target name="css_minify">
+    <apply executable="java" parallel="true" verbose="true">
+        <fileset dir="${compressor.cssDir}" includes="*.css"/>
+        <arg line="-jar"/>
+        <arg path="${compressor.path}"/>
+        <arg line="--line-break -1"/>
+        <arg line="--charset utf-8"/>
+        <srcfile/>
+        <!-- Workaround for yuicompressor-2.4.8 has a bug with absolute paths on windows. 
+        When fixed: remove line below and uncomment the other 3 lines and remove the <move> task -->
+        <arg line="-o '.css$:.min.css'"/>
+        <!--<arg line="-o"/>
+        <mapper type="glob" from="*.css" to="${compressor.cssDir}/min/*.min.css"/>
+        <targetfile/>-->
+    </apply>
+    <move todir="${compressor.cssDir}/min">
+      <fileset dir="${compressor.cssDir}" includes="*.min.css"/>
+    </move>
+    <copy file="${compressor.cssDir}/index.html" todir="${compressor.cssDir}/min"/>
+  </target>
 
 	<target name="build_component" description="packages the final component file">
 		<zip destfile="${cfg.buildVersionDir}/components/${cfg.comName}.zip" basedir="${cfg.comDir}">
@@ -101,6 +148,8 @@
 	</target>
 
 	<target name="clean" description="Destroys all generated files and dirs.">
+		<delete dir="${compressor.cssDir}/min" />
+		<delete dir="${compressor.jsDir}/min" />
 		<delete dir="${cfg.buildVersionDir}" />
 		<delete dir="${cfg.buildDir}" />
 		<delete file="${cfg.xmlfile}" />

@@ -8,3 +8,5 @@ ftp.server=
 ftp.user=
 ftp.password=
 ftp.dir=
+
+compressor.path=
