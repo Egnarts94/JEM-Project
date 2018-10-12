@@ -74,7 +74,7 @@ class JemViewCalendar extends JViewLegacy
 		$document->addStyleDeclaration($style);
 
 		// add javascript (using full path - see issue #590)
-		JHtml::_('script', 'media/com_jem/js/calendar.js');
+    JemHelper::loadJs('calendar', true);
 
 		$year  = (int)$jinput->getInt('yearID', strftime("%Y"));
 		$month = (int)$jinput->getInt('monthID', strftime("%m"));

@@ -82,7 +82,7 @@ class JemViewVenue extends JEMView
 			$document->addStyleDeclaration ($style);
 
 			// add javascript (using full path - see issue #590)
-			JHtml::_('script', 'media/com_jem/js/calendar.js');
+      JemHelper::loadJs('calendar', true);
 
 			// Retrieve year/month variables
 			$year = $jinput->get('yearID', strftime("%Y"),'int');

@@ -1024,8 +1024,8 @@ class JemOutput
 				}
 
 				JemHelper::loadCss('googlemap');
-				JHtml::_('script', 'com_jem/infobox.js', false, true);
-				JHtml::_('script', 'com_jem/googlemap.js', false, true);
+				JemHelper::loadJs('infobox');
+				JemHelper::loadJs('googlemap');
 
 				$output = '<div id="map-canvas" class="map_canvas"/></div>';
 				break;

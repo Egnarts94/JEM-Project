@@ -81,7 +81,7 @@ class JemViewCategory extends JemView
 			$document->addStyleDeclaration($style);
 
 			// add javascript (using full path - see issue #590)
-			JHtml::_('script', 'media/com_jem/js/calendar.js');
+      JemHelper::loadJs('calendar', true);
 
 			// Retrieve date variables
 			$year  = (int)$app->input->getInt('yearID', strftime("%Y"));

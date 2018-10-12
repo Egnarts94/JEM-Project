@@ -100,6 +100,16 @@
 			<option value=",">COM_JEM_SETTINGS_CSV_SEPARATOR_COMMA</option>
 			<option value=";">COM_JEM_SETTINGS_CSV_SEPARATOR_SEMICOLON</option>
 		</field>
+    <field name="minifiedcssjs" type="radio"
+			label="COM_JEM_INCLUDE_MINIFIED"
+			description="COM_JEM_INCLUDE_MINIFIED_DESC"
+			class="inputbox btn-group btn-group-yesno"
+			default="1"
+			required="false"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 	</fieldset>
 
 	<fieldset name="display"

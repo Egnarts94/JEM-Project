@@ -180,11 +180,11 @@ class JemViewEditevent extends JViewLegacy
 		JemHelper::loadCustomCss();
 
 		// Load scripts
-		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		JHtml::_('script', 'com_jem/recurrence.js', false, true);
-		JHtml::_('script', 'com_jem/seo.js', false, true);
-		JHtml::_('script', 'com_jem/unlimited.js', false, true);
-		JHtml::_('script', 'com_jem/other.js', false, true);
+    JemHelper::loadJs('attachments');
+    JemHelper::loadJs('recurrence');
+    JemHelper::loadJs('seo');
+    JemHelper::loadJs('unlimited');
+    JemHelper::loadJs('other');
 
 		// Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($item->params->get('pageclass_sfx'));

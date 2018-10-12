@@ -46,7 +46,7 @@ class JemViewSearch extends JemView
 		JemHelper::loadCustomTag();
 
 		// Load Script
-		JHtml::_('script', 'com_jem/search.js', false, true);
+    JemHelper::loadJs('search');
 
 		$filter_continent = $app->getUserStateFromRequest('com_jem.search.filter_continent', 'filter_continent', '', 'string');
 		$filter_country   = $app->getUserStateFromRequest('com_jem.search.filter_country', 'filter_country', '', 'string');

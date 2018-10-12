@@ -152,8 +152,8 @@ class JemViewEditvenue extends JViewLegacy
 		JemHelper::loadCustomTag();
 
 		// Load script
-		JHtml::_('script', 'com_jem/attachments.js', false, true);
-		JHtml::_('script', 'com_jem/other.js', false, true);
+    JemHelper::loadJs('attachments');
+    JemHelper::loadJs('other');
 		$key = trim($settings->get('global_googleapi', ''));
 		$document->addScript('https://maps.googleapis.com/maps/api/js?'.(!empty($key) ? 'key='.$key.'&amp;' : '').'sensor=false&amp;libraries=places&language='.$language);
 
@@ -162,7 +162,7 @@ class JemViewEditvenue extends JViewLegacy
 
 		// JQuery scripts
 		$document->addScript('https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
-		JHtml::_('script', 'com_jem/jquery.geocomplete.js', false, true);
+    JemHelper::loadJs('jquery.geocomplete');
 
 		// No permissions required/useful on this view
 		$permissions = new stdClass();

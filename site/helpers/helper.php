@@ -1229,18 +1229,26 @@ class JemHelper
 				$css = JHtml::_('stylesheet', $file, array(), false);
 			} else {
 				# unfortunately we don't have a valid file so we're looking at the default
+        $minfileext = ".min";
+        if ($jemsettings->minifiedcssjs == 0) {
+          $minfileext = "";
+        }  
         if($jemsettings->layoutstyle == 1) {
-          $css = JHtml::_('stylesheet', 'com_jem/'.$css.'-responsive.css', array(), true);
+          $css = JHtml::_('stylesheet', 'com_jem/'.$css.'-responsive'.$minfileext.'.css', array(), true);
         } else {
-          $css = JHtml::_('stylesheet', 'com_jem/'.$css.'.css', array(), true);
+          $css = JHtml::_('stylesheet', 'com_jem/'.$css.$minfileext.'.css', array(), true);
         }
 			}
 		} else {
 			# here we want to use the normal css
+      $minfileext = ".min";
+      if ($jemsettings->minifiedcssjs == 0) {
+        $minfileext = "";
+      }      
 			if($jemsettings->layoutstyle == 1) {
-        $css = JHtml::_('stylesheet', 'com_jem/'.$css.'-responsive.css', array(), true);
+        $css = JHtml::_('stylesheet', 'com_jem/'.$css.'-responsive'.$minfileext.'.css', array(), true);
       } else {
-        $css = JHtml::_('stylesheet', 'com_jem/'.$css.'.css', array(), true);
+        $css = JHtml::_('stylesheet', 'com_jem/'.$css.$minfileext.'.css', array(), true);
       }
 		}
 
@@ -1267,6 +1275,21 @@ class JemHelper
         $document->addStylesheet(JUri::base(true).'/media/com_jem/FontAwesome/jem-icon-font.css');        
       }
     }
+  }
+  
+  static public function loadJs($js, $absolute = false) {
+    $jemsettings	= JemHelper::config();
+    
+    $minfileext = ".min";
+    if ($jemsettings->minifiedcssjs == 0) {
+      $minfileext = "";
+    }
+    if ($absolute) {
+      JHtml::_('script', 'media/com_jem/js/'.$js.$minfileext.'.js');      
+    } else {
+      JHtml::_('script', 'com_jem/'.$js.$minfileext.'.js', false, true);
+    }
+    
   }
 
 	static public function defineCenterMap($data = false)
