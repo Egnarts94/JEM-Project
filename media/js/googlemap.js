@@ -2,7 +2,7 @@ function initialize() {
 
 	/* coordinates */
 	var lat			= document.getElementById('latitude').value;
-	var long		= document.getElementById('longitude').value;
+	var lon		= document.getElementById('longitude').value;
 
 	/* address */
 	var title		= document.getElementById('venue').value;
@@ -10,7 +10,7 @@ function initialize() {
 	var postalCode	= document.getElementById('postalCode').value;
 	var street		= document.getElementById('street').value;
 
-	var myLatlng = new google.maps.LatLng(lat,long);
+	var myLatlng = new google.maps.LatLng(lat,lon);
 
 	var myMapOptions = {
 			 zoom: 16
@@ -26,14 +26,14 @@ function initialize() {
 		lat = null;
 	}
 
-	if (long == 0.000000) {
-		long = null;
+	if (lon == 0.000000) {
+		lon = null;
 	}
 
-	/* check to see if we've lat+long
+	/* check to see if we've lat+lon
 	/* if we've it then we can use the coordinates to center the map
 	 */
-	if (lat && long) {
+	if (lat && lon) {
 		var marker = new google.maps.Marker({
 		      position: myLatlng,
 		      map: map,
